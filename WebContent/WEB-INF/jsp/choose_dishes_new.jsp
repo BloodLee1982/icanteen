@@ -50,7 +50,12 @@ $(function() {
 		}
 		if(!$('#' + id + 'd').html()) {
 			htm = '<tr id="' + id + 'd"><td style="width: 110px;">' + name + '</td><td style="width: 50px;">1</td><td>' + price + '元</td></tr>';
-			$('#dishes_tab').append($(htm));
+			if(name.indexOf('面') >= 0) {
+				$('#packages_tab').append($(htm));
+			} else {
+				$('#dishes_tab').append($(htm));
+			}
+			
 		} else {
 			var textd = $('#' + id + 'd').children().eq(1).text();
 			$('#' + id + 'd').children().eq(1).text(parseInt(textd) + 1);
@@ -63,7 +68,7 @@ $(function() {
 	});
 	
 	// 加套
-	$('body').on('click', '#addtButt', function() {
+	/* $('body').on('click', '#addtButt', function() {
 		$this = $(this);
 		var id = $this.data('id');
 		var name = $this.data('name');
@@ -93,10 +98,10 @@ $(function() {
 		$('#packages').val(JSON.stringify(order));
 		$('.badge').text(parseInt($('.badge').text()) + 1);
 		$('#sum').text($('#price').val() + '元');
-	});
+	}); */
 	
 	// 减套
-	$('body').on('click', '#redtButt', function() {
+	/* $('body').on('click', '#redtButt', function() {
 		$this = $(this);
 		var id = $this.data('id');
 		var price = $this.data('price');
@@ -124,7 +129,7 @@ $(function() {
 			}
 		}
 		$('#sum').text($('#price').val() + '元');
-	});
+	}); */
 	
 	// 减单
 	$('body').on('click', '#reddButt', function() {
@@ -183,6 +188,7 @@ $(function() {
 	
 	// 提单
 	$('#submit').on('click', function() {
+		$('#time').text('');
 		if($('#packages').val() == '' && $('#dishes').val() == '') {
 			return false;
 		}
@@ -195,8 +201,20 @@ $(function() {
 		if($('#dishes').val() == '') {
 			$('#dishes').val('{\"dishes\":[]}');
 		}
-		$('#order').printArea();
+		// $('#time').text(getNowFormatDate());
+		// $('#order').printArea();
 		$('#dishesForm').submit();
+	});
+	
+	$('#printTable').on('click', function() {
+		if($('#packages').val() == '' && $('#dishes').val() == '') {
+			return false;
+		}
+		if($('#packages').val() == '{\"packages\":[]}' && $('#dishes').val() == '{\"dishes\":[]}') {
+			return false;
+		}
+		$('#time').text(getNowFormatDate());
+		$('#order').printArea();
 	});
 	
 	// 关
@@ -204,7 +222,22 @@ $(function() {
 		$('#dishesList').hide();
 	});
 });
-
+function getNowFormatDate() {
+    var date = new Date();
+    var seperator1 = "-";
+    var seperator2 = ":";
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + date.getHours() + seperator2 + date.getMinutes();
+    return currentdate;
+} 
 </script>
 </head>
 <body>
@@ -216,31 +249,33 @@ $(function() {
 			<a class="brand" alt="Placemeter Logo" href="/" >
 				<span class="logo" style="color: #ffffff;">beexbee</span>
 			</a>
-			<nav style="position: absolute;margin-top: 15px;right: 20px;">
-				<ul class="nav nav-pills" role="tablist">
-			  		<li role="presentation" class="active">
-				  		<a href="#" id="showDishes">查看点菜
-				  			<span class="badge" style="margin-left: 5px;font-size: 20px;">0</span>
-				  		</a>
-			  		</li>
+			<nav class="primary-nav">
+				<ul class="list-unstyled clearfix">
+					<li>
+						
+					</li>
 				</ul>
+			</nav>
+			<nav class="secondary-nav" style="top: -70px;">
+			<a class="demo btn btn-primary" track-link-placement="Site header" track-link=""Create Account" CTA clicked" href="<%=path%>/index.html">返回首页</a>
 			</nav>
 		</div>
 	</div>
 </header>
 <div class="tdiv">
-<div style="width: 20%;float: left;">
+<div style="width: 16%;float: left;">
 	<div id="order" class="ic-order" style="margin-left: 30px;margin-top: 30px;">
-		<b>公司名</b><br/><br/>
-		<table id="packages_tab">
+		<b style="margin-left: 80px">美达快厨</b><br/>
+		<table id="packages_tab" style="border-bottom: 2px solid #000;">
 			
 		</table>
-		<table id="dishes_tab">
+		<table id="dishes_tab" style="border-bottom: 2px solid #000;">
 			
 		</table>
 		<table>
 			<tr><td style="width: 110px;">总价</td><td style="width: 50px;"></td><td id="sum"></td></tr>
 		</table>
+		<div id="time" style="font-size: 5px;"></div>
 	</div>
 	<div class="oform">
 		<form id="dishesForm" action="addOrder.html" method="post">
@@ -250,12 +285,13 @@ $(function() {
 		</form>
 	</div>
 	<div class="obutt">
-		<button id="submit" type="button" class="btn btn-success btn-lg">提交后厨</button>
+	<button id="printTable" type="button" class="btn btn-success btn-lg">打印订单</button>
+		<button id="submit" type="button" class="btn btn-success btn-lg">保存</button>
 	</div>
 </div>
-<div style="width: 1200px;float: left;">
-	<div class="tit">套餐</div>
-	<section class="frameworks">
+<div style="width: 600px;float: left;margin-left: 140px;">
+	<!-- <div class="tit">套餐</div> -->
+	<%-- <section class="frameworks"> 
 		<div class="container-fluid wrapper wow fadeIn animated">
 			<div class="row">
 				<c:forEach var="packages" items="${packagesList}" varStatus="stat">
@@ -271,14 +307,14 @@ $(function() {
 				</c:forEach>
 			</div>
 		</div>
-	</section>
+	</section> --%>
 	<div class="tit">单菜</div>
 	<section class="frameworks">
 		<div class="container-fluid wrapper wow fadeIn animated">
 			<div class="row">
 				<c:forEach var="dishes" items="${dishesList}" varStatus="stat">
-					<article class="col-sm-4" style="border-bottom: 2px solid white;">
-						<span class="number">${dishes.code}</span>
+					<article class="col-sm-6" style="border-bottom: 2px solid white;">
+						<!-- <span class="number">${dishes.code}</span> -->
 						<div class="framework">
 							<h4>${dishes.name}</h4> 
 							<p>${dishes.price}元</p>

@@ -235,4 +235,13 @@ public class IcanteenService {
 		Date endDate = DateUtil.addDays(startDate, 1);
 		return orderDao.find(hql, startDate, endDate);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Order> queryOrderByDate(String startDate, String endDate) {
+		String hql = "from Order o where o.flag = 2 and o.createDate > ? and o.createDate < ?";
+		Date startDateT = DateUtil.stringToDate(startDate , DateUtil.DATE_PATTERN_YYYYMMDD1);
+		Date endDateT = DateUtil.addDays(DateUtil.stringToDate(endDate , DateUtil.DATE_PATTERN_YYYYMMDD1), 1);
+		return orderDao.find(hql, startDateT, endDateT);
+	}
+	
 }

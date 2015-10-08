@@ -33,20 +33,7 @@ $(function() {
 			<a class="brand" alt="Placemeter Logo" href="/">
 				<span class="logo">beexbee</span>
 			</a>
-			<nav class="primary-nav">
-				<ul class="list-unstyled clearfix">
-					<li>
-						<a class="title" href="<%=path%>/adTablesPage.html">台号管理</a>
-						<a class="title" href="<%=path%>/adWaiterPage.html">服务员管理</a>
-						<a class="title" href="<%=path%>/adDishesPage.html">菜品管理</a>
-						<a class="title" href="<%=path%>/adPackagePages.html">套餐管理</a>
-						<a class="title" href="<%=path%>/adminWeekDishesPage.html">周菜单管理</a>
-						<a class="title" href="<%=path%>/adOrderPage.html">查看订单</a>
-						<a class="title" href="<%=path%>/showUserOrderPage.html">查看预订</a>
-						<a class="title" href="<%=path%>/exchangePage.html">兑换预订</a>
-					</li>
-				</ul>
-			</nav>
+			<c:import url="nav.jsp"/>
 			<nav class="secondary-nav">
 			<a class="demo btn btn-primary" track-link-placement="Site header" track-link=""Create Account" CTA clicked" href="<%=path%>/index.html">返回首页</a>
 			</nav>

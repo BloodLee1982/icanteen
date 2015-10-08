@@ -27,6 +27,7 @@ import com.bee.ic.domain.Waiter;
 import com.bee.ic.domain.WeekDishes;
 import com.bee.ic.service.IcanteenService;
 import com.bee.ic.util.DateUtil;
+import com.bee.ic.util.ExcelUtil;
 
 /**
  * @author Administrator
@@ -41,7 +42,28 @@ public class AdminController {
 	@RequestMapping("/cindex")
 	public ModelAndView cindex() {
 		ModelAndView view = new ModelAndView();
+		
 		view.setViewName("cindex");
+		return view;
+	}
+	
+	@RequestMapping("/exportExcel")
+	public ModelAndView exportExcel() {
+		ModelAndView view = new ModelAndView();
+		List<Order> olist = icanteenService.queryOrder(DateUtil.nowStringDate(DateUtil.DATE_PATTERN_YYYYMMDD1));
+		List<Dishes> dlist = icanteenService.getAllDishes();
+		ExcelUtil.outExcelDay(olist, dlist);
+		view.setViewName("redirect:excelPage.html");
+		return view;
+	}
+	
+	@RequestMapping("/exportExcelByDay")
+	public ModelAndView exportExcelByDay(String startDate, String endDate) {
+		ModelAndView view = new ModelAndView();
+		List<Order> olist = icanteenService.queryOrderByDate(startDate, endDate);
+		List<Dishes> dlist = icanteenService.getAllDishes();
+		ExcelUtil.outExcelDate(olist, dlist, startDate, endDate);
+		view.setViewName("redirect:excelPage.html");
 		return view;
 	}
 	
@@ -49,6 +71,13 @@ public class AdminController {
 	public ModelAndView exchangePage() {
 		ModelAndView view = new ModelAndView();
 		view.setViewName("admin_exchange");
+		return view;
+	}
+	
+	@RequestMapping("/excelPage")
+	public ModelAndView excelPage() {
+		ModelAndView view = new ModelAndView();
+		view.setViewName("admin_excel");
 		return view;
 	}
 	

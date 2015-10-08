@@ -34,7 +34,7 @@
 		</div>
 	</div>
 </header>
-<div class="col-sm-6" style="margin-left: auto;margin-right: auto;top: 100px;margin-left: 25%">
+<div class="col-sm-8" style="margin-left: auto;margin-right: auto;top: 100px;margin-left: 17%">
 <div class="col-sm-6" style="margin-top: 20px;padding-left: 5px;">
 	<div class="solution solution-1">
 		<a track-link="solutions" href="<%=path%>/chooseDishesPageNew.html">
@@ -55,18 +55,17 @@
 			<span class="glyphicon glyphicon-yen" style="bottom: 10px;position: absolute;right: 30px;top: 110px;font-size: 120px" aria-hidden="true"></span>
 		</a>
 	</div>
-</div>
-
+</div> --%>
 <div class="col-sm-6" style="margin-top: 20px;padding-left: 5px;">
 	<div class="solution solution-3">
-		<a track-link="solutions" href="<%=path%>/showOrderPage.html">
+		<a track-link="solutions" href="<%=path%>/excelPage.html">
 			<div class="text">
-				<p class="byline">打印订单</p>
+				<p class="byline">导出报表</p>
 			</div>
-			<span class="glyphicon glyphicon-print" style="bottom: 10px;position: absolute;right: 30px;top: 110px;font-size: 120px" aria-hidden="true"></span>
+			<span class="glyphicon glyphicon-open-file" style="bottom: 10px;position: absolute;right: 30px;top: 110px;font-size: 120px" aria-hidden="true"></span>
 		</a>
 	</div>
-</div> --%>
+</div>
 
 <div class="col-sm-6" style="margin-top: 20px;padding-left: 5px;">
 	<div class="solution solution-4">

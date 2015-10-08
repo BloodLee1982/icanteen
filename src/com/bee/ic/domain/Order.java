@@ -1,5 +1,6 @@
 package com.bee.ic.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -84,6 +85,7 @@ public class Order extends BaseDomain {
 	/**
 	 * @return the dishWords
 	 */
+	 @Column(columnDefinition="TEXT", nullable=true)
 	public String getDishWords() {
 		return dishWords;
 	}
